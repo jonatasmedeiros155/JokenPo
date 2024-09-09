@@ -1,8 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class GameScreen extends StatefulWidget {
+  const GameScreen({super.key});
+
   @override
   _GameScreenState createState() => _GameScreenState();
 }
@@ -56,7 +61,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Pedra, Papel, Tesoura',
           style: TextStyle(color: Colors.white),
         ),
@@ -66,14 +71,14 @@ class _GameScreenState extends State<GameScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ScoreBoard(playerScore: playerScore, computerScore: computerScore),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           MoveDisplay(playerMove: playerMove, computerMove: computerMove),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             resultMessage,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           MoveButtons(onMoveSelected: _playMove),
         ],
       ),
@@ -85,7 +90,7 @@ class ScoreBoard extends StatelessWidget {
   final int playerScore;
   final int computerScore;
 
-  ScoreBoard({required this.playerScore, required this.computerScore});
+  const ScoreBoard({super.key, required this.playerScore, required this.computerScore});
 
   @override
   Widget build(BuildContext context) {
@@ -94,14 +99,14 @@ class ScoreBoard extends StatelessWidget {
       children: [
         Column(
           children: [
-            Text('Você', style: TextStyle(fontSize: 18)),
-            Text(playerScore.toString(), style: TextStyle(fontSize: 24)),
+            const Text('Você', style: TextStyle(fontSize: 18)),
+            Text(playerScore.toString(), style: const TextStyle(fontSize: 24)),
           ],
         ),
         Column(
           children: [
-            Text('PC', style: TextStyle(fontSize: 18)),
-            Text(computerScore.toString(), style: TextStyle(fontSize: 24)),
+            const Text('PC', style: TextStyle(fontSize: 18)),
+            Text(computerScore.toString(), style: const TextStyle(fontSize: 24)),
           ],
         ),
       ],
@@ -113,15 +118,28 @@ class MoveDisplay extends StatelessWidget {
   final String playerMove;
   final String computerMove;
 
-  MoveDisplay({required this.playerMove, required this.computerMove});
+  const MoveDisplay({super.key, required this.playerMove, required this.computerMove});
+
+  IconData _getIconForMove(String move) {
+    switch (move) {
+      case 'Pedra':
+        return FontAwesomeIcons.handFist;
+      case 'Papel':
+        return FontAwesomeIcons.hand;
+      case 'Tesoura':
+        return FontAwesomeIcons.handScissors;
+      default:
+        return Icons.help_outline;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Sua jogada: $playerMove'),
-        SizedBox(height: 10),
-        Text('Jogada do Computador: $computerMove'),
+        Icon(_getIconForMove(playerMove), size: 50),
+        const SizedBox(height: 10),
+        Icon(_getIconForMove(computerMove), size: 50),
       ],
     );
   }
@@ -130,26 +148,45 @@ class MoveDisplay extends StatelessWidget {
 class MoveButtons extends StatelessWidget {
   final Function(String) onMoveSelected;
 
-  MoveButtons({required this.onMoveSelected});
+  const MoveButtons({super.key, required this.onMoveSelected});
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton(
-          onPressed: () => onMoveSelected('Pedra'),
-          child: Text('Pedra'),
-        ),
-        ElevatedButton(
-          onPressed: () => onMoveSelected('Papel'),
-          child: Text('Papel'),
-        ),
-        ElevatedButton(
-          onPressed: () => onMoveSelected('Tesoura'),
-          child: Text('Tesoura'),
-        ),
-      ],
-    );
-  }
+
+ @override
+Widget build(BuildContext context) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Column(
+        children: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.handFist),
+            onPressed: () => onMoveSelected('Pedra'),
+            iconSize: 50,
+          ),
+          Text('Pedra'),
+        ],
+      ),
+      Column(
+        children: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.hand),
+            onPressed: () => onMoveSelected('Papel'),
+            iconSize: 50,
+          ),
+          Text('Papel'),
+        ],
+      ),
+      Column(
+        children: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.handScissors),
+            onPressed: () => onMoveSelected('Tesoura'),
+            iconSize: 50,
+          ),
+          Text('Tesoura'),
+        ],
+      ),
+    ],
+  );
+}
 }
