@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -10,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pedra, Papel, Tesoura',
-      home: GameScreen(),
+      home: const GameScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -63,10 +62,11 @@ class _GameScreenState extends State<GameScreen> {
       appBar: AppBar(
         title: const Text(
           'Pedra, Papel, Tesoura',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Color.fromARGB(255, 14, 10, 10)),
         ),
-        backgroundColor: const Color.fromARGB(255, 44, 34, 194),
+        backgroundColor: const Color.fromARGB(255, 97, 95, 230),
       ),
+      backgroundColor: const Color.fromARGB(255, 205, 215, 240), // Aqui está a cor de fundo alterada para azul claro
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -150,43 +150,42 @@ class MoveButtons extends StatelessWidget {
 
   const MoveButtons({super.key, required this.onMoveSelected});
 
-
- @override
-Widget build(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      Column(
-        children: [
-          IconButton(
-            icon: Icon(FontAwesomeIcons.handFist),
-            onPressed: () => onMoveSelected('Pedra'),
-            iconSize: 50,
-          ),
-          Text('Pedra'),
-        ],
-      ),
-      Column(
-        children: [
-          IconButton(
-            icon: Icon(FontAwesomeIcons.hand),
-            onPressed: () => onMoveSelected('Papel'),
-            iconSize: 50,
-          ),
-          Text('Papel'),
-        ],
-      ),
-      Column(
-        children: [
-          IconButton(
-            icon: Icon(FontAwesomeIcons.handScissors),
-            onPressed: () => onMoveSelected('Tesoura'),
-            iconSize: 50,
-          ),
-          Text('Tesoura'),
-        ],
-      ),
-    ],
-  );
-}
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            IconButton(
+              icon: Icon(FontAwesomeIcons.handFist),
+              onPressed: () => onMoveSelected('Pedra'),
+              iconSize: 50,
+            ),
+            const Text('Pedra'),
+          ],
+        ),
+        Column(
+          children: [
+            IconButton(
+              icon: Icon(FontAwesomeIcons.hand),
+              onPressed: () => onMoveSelected('Papel'),
+              iconSize: 50,
+            ),
+            const Text('Papel'),
+          ],
+        ),
+        Column(
+          children: [
+            IconButton(
+              icon: Icon(FontAwesomeIcons.handScissors),
+              onPressed: () => onMoveSelected('Tesoura'),
+              iconSize: 50,
+            ),
+            const Text('Tesoura'),
+          ],
+        ),
+      ],
+    );
+  }
 }
